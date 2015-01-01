@@ -19,70 +19,34 @@
         <script src="../bower_components/webcomponentsjs/webcomponents.min.js"></script>
         <!-- 2. Load the component using an HTML Import -->
 
-        <link href="../bower_components/core-icons/core-icons.html" rel="import" />
-        <link href="../bower_components/core-icon-button/core-icon-button.html" rel="import" />
-        <link href="../bower_components/core-toolbar/core-toolbar.html" rel="import" />
-        <link href="../bower_components/core-animated-pages/core-animated-pages.html" rel="import" />
+        <link rel="import" href="../bower_components/core-icons/core-icons.html">
+        <link rel="import" href="../bower_components/core-header-panel/core-header-panel.html">
+        <link rel="import" href="../bower_components/core-toolbar/core-toolbar.html">
+        <link rel="import" href="../bower_components/paper-elements/paper-elements.html">
+        <script src="../scripts/jquery-1.11.2.min.js" type="text/javascript"></script>
+        <script src="../scripts/jquery.transit.min.js" type="text/javascript"></script>
 
         <link rel="stylesheet" href="../styles/homepage.css">
 
         <meta name="application-name" content="Virtual Human App">
     </head>
-    <body unresolved fullbleed vertical layout>
-    <template is="auto-binding">
+    <body fullbleed layout vertical>    
+    <core-header-panel flex>
         <core-toolbar class="toolbar">
-            <core-icon-button icon="{{$.pages.selected != 0 ? 'arrow-back' : '-'}}" on-tap="{{back}}"></core-icon-button>
-            <div flex>Virtual Human App</div>
+            <core-icon icon="face-unlock" style="width: 48px; height: 48px" ></core-icon>
+            <span flex>Welcome, Steve Jobs</span>
         </core-toolbar>
-        <core-animated-pages id="pages" flex selected="0" on-core-animated-pages-transition-end="{{transitionend}}" transitions="cross-fade-all hero-transition">
-
-            <section vertical layout>
-
-                <div id="container" flex horizontal wrap around-justified layout hero-p>
-                    <template repeat="{{item in items}}">
-                        <div class="card" vertical center center-justified layout hero-id="item-{{item}}" hero?="{{$.pages.selected === item + 1 || lastSelected === item + 1}}" on-tap="{{selectView}}"><span cross-fade>{{item}}</span></div>
-                    </template>
-                </div>
-
-            </section>
-
-            <template repeat="{{item in items}}">
-                <section vertical layout>
-                    <div class="view" flex vertical center center-justified layout hero-id="item-{{item}}" hero?="{{$.pages.selected === item + 1 || $.pages.selected === 0}}"><span cross-fade>{{item}}</span></div>
-                </section>
-            </template>
-
-        </core-animated-pages>
-    </template>
-
-    <script>
-            addEventListener('template-bound', function (e) {
-                var scope = e.target;
-                var items = [], count = 50;
-                for (var i = 0; i < count; i++) {
-                    items.push(i);
-                }
-
-                scope.items = items;
-
-                scope.selectView = function (e) {
-                    var i = e.target.templateInstance.model.item;
-                    this.$.pages.selected = i + 1;
-                }
-
-                scope.back = function () {
-                    this.lastSelected = this.$.pages.selected;
-                    console.log(this.lastSelected);
-                    this.$.pages.selected = 0;
-                }
-
-                scope.transitionend = function () {
-                    if (this.lastSelected) {
-                        this.lastSelected = null;
-                    }
-                }
-            })
-    </script>
-
+        <div id="tiles-container" class="tiles-container" layout wrap horizontal around-justified center relative>
+            <div id="healthissues" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="report-problem"></core-icon>Health Issues<paper-ripple fit></paper-ripple></div>
+            <div id="humanbody" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="accessibility"></core-icon>Human Body<paper-ripple fit></paper-ripple></div>
+            <div id="labresults" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="assignment"></core-icon>Test Results<paper-ripple fit></paper-ripple></div>
+            <div id="creategroups" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="account-child"></core-icon>Create Groups<paper-ripple fit></paper-ripple></div>
+            <div id="comparison" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="cached"></core-icon>Compare with Groups<paper-ripple fit></paper-ripple></div>
+            <div id="charts" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="assessment"></core-icon>Charts<paper-ripple fit></paper-ripple></div>
+            <div id="profile" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="face-unlock"></core-icon>Profile<paper-ripple fit></paper-ripple></div>
+            <div id="settings" class="card raised" vertical center center-justified layout onclick="gotoPage(this)"><core-icon icon="settings"></core-icon>Settings<paper-ripple fit></paper-ripple></span></div>
+        </div>
+    </core-header-panel>
+    <script src="../scripts/homepage.js" type="text/javascript"></script>
 </body>
 </html>
